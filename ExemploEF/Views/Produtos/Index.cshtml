@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ExemploEF.Models.Produto>
+
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<style>
+    /* Fundo azul gradiente */
+    .page-background {
+        background: linear-gradient(to right, #0066cc, #00b3ff); /* Gradiente azul */
+        padding: 20px;
+    }
+    /* Título em branco */
+    .title-white {
+        color: white;
+    }
+</style>
+
+<div class="page-background">
+    <h1 class="text-center title-white">@ViewData["Title"]</h1>
+
+    <!-- Botão Criar Novo Produto -->
+    <div class="d-flex justify-content-center mb-3">
+        <a asp-action="Create" class="btn btn-primary">Criar Novo Produto</a>
+    </div>
+
+    <!-- Tabela de Produtos -->
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.Estoque)</th>
+                <th>@Html.DisplayNameFor(model => model.Categoria)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Estoque)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Categoria.Nome)</td>
+                    <td class="d-flex justify-content-center">
+                        <a asp-action="Edit" asp-route-id="@item.ProdutoId" class="btn btn-warning mx-1">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.ProdutoId" class="btn btn-info mx-1">Detalhes</a>
+                        <a asp-action="Delete" asp-route-id="@item.ProdutoId" class="btn btn-danger mx-1">Deletar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

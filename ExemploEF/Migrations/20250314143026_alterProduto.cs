@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace ExemploEF.Migrations
 {
     /// <inheritdoc />
-    public partial class alterCategoria : Migration
+    public partial class alterProduto : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,11 +46,39 @@ namespace ExemploEF.Migrations
                 name: "PK_Categorias",
                 table: "Categorias",
                 column: "CategoriaID");
+
+            migrationBuilder.CreateTable(
+                name: "Produtos",
+                columns: table => new
+                {
+                    ProdutoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estoque = table.Column<int>(type: "int", nullable: false),
+                    CategoriaID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Produtos", x => x.ProdutoId);
+                    table.ForeignKey(
+                        name: "FK_Produtos_Categorias_CategoriaID",
+                        column: x => x.CategoriaID,
+                        principalTable: "Categorias",
+                        principalColumn: "CategoriaID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Produtos_CategoriaID",
+                table: "Produtos",
+                column: "CategoriaID");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Produtos");
+
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Categorias",
                 table: "Categorias");

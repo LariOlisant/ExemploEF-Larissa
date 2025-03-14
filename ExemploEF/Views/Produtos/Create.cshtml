@@ -1,7 +1,7 @@
-﻿@model ExemploEF.Models.Cliente
+﻿@model ExemploEF.Models.Produto
 
 @{
-    ViewData["Title"] = "Editar Cliente";
+    ViewData["Title"] = "Criar Produto";
 }
 
 <style>
@@ -15,15 +15,12 @@
 <div class="page-background">
     <h1 class="text-center text-white">@ViewData["Title"]</h1>
 
-    <h4 class="text-white">Cliente</h4>
+    <h4 class="text-white">Produto</h4>
     <hr />
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <form asp-action="Edit">
+            <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <!-- Campo ClienteID -->
-                <input type="hidden" asp-for="ClienteID" />
 
                 <!-- Campo Nome -->
                 <div class="form-group">
@@ -32,16 +29,22 @@
                     <span asp-validation-for="Nome" class="text-danger"></span>
                 </div>
 
-                <!-- Campo Nascimento -->
+                <!-- Campo Estoque -->
                 <div class="form-group">
-                    <label asp-for="Nascimento" class="control-label text-white">Nascimento</label>
-                    <input asp-for="Nascimento" class="form-control" />
-                    <span asp-validation-for="Nascimento" class="text-danger"></span>
+                    <label asp-for="Estoque" class="control-label text-white">Estoque</label>
+                    <input asp-for="Estoque" class="form-control" />
+                    <span asp-validation-for="Estoque" class="text-danger"></span>
                 </div>
 
-                <!-- Botão Salvar -->
+                <!-- Campo Categoria -->
+                <div class="form-group">
+                    <label asp-for="CategoriaID" class="control-label text-white">Categoria</label>
+                    <select asp-for="CategoriaID" class="form-control" asp-items="ViewBag.CategoriaID"></select>
+                </div>
+
+                <!-- Botão Criar -->
                 <div class="form-group text-center">
-                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                    <input type="submit" value="Criar" class="btn btn-primary" />
                 </div>
             </form>
         </div>

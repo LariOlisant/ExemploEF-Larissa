@@ -56,6 +56,45 @@ namespace ExemploEF.Migrations
 
                     b.ToTable("Clientes", (string)null);
                 });
+
+            modelBuilder.Entity("ExemploEF.Models.Produto", b =>
+                {
+                    b.Property<Guid>("ProdutoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoriaID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Estoque")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProdutoId");
+
+                    b.HasIndex("CategoriaID");
+
+                    b.ToTable("Produtos", (string)null);
+                });
+
+            modelBuilder.Entity("ExemploEF.Models.Produto", b =>
+                {
+                    b.HasOne("ExemploEF.Models.Categoria", "Categoria")
+                        .WithMany("Produtos")
+                        .HasForeignKey("CategoriaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
+                });
+
+            modelBuilder.Entity("ExemploEF.Models.Categoria", b =>
+                {
+                    b.Navigation("Produtos");
+                });
 #pragma warning restore 612, 618
         }
     }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExemploEF.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250307114248_alterCategoria")]
-    partial class alterCategoria
+    [Migration("20250314143026_alterProduto")]
+    partial class alterProduto
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,6 +58,45 @@ namespace ExemploEF.Migrations
                     b.HasKey("ClienteID");
 
                     b.ToTable("Clientes", (string)null);
+                });
+
+            modelBuilder.Entity("ExemploEF.Models.Produto", b =>
+                {
+                    b.Property<Guid>("ProdutoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoriaID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Estoque")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProdutoId");
+
+                    b.HasIndex("CategoriaID");
+
+                    b.ToTable("Produtos", (string)null);
+                });
+
+            modelBuilder.Entity("ExemploEF.Models.Produto", b =>
+                {
+                    b.HasOne("ExemploEF.Models.Categoria", "Categoria")
+                        .WithMany("Produtos")
+                        .HasForeignKey("CategoriaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
+                });
+
+            modelBuilder.Entity("ExemploEF.Models.Categoria", b =>
+                {
+                    b.Navigation("Produtos");
                 });
 #pragma warning restore 612, 618
         }

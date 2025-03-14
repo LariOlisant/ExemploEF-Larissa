@@ -4,32 +4,44 @@
     ViewData["Title"] = "Clientes";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    /* Fundo azul gradiente */
+    .page-background {
+        background: linear-gradient(to right, #0066cc, #00b3ff); /* Gradiente azul */
+        padding: 20px;
+    }
+</style>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Criar Novo Cliente</a>
-</p>
+<div class="page-background">
+    <h1 class="text-center text-white">@ViewData["Title"]</h1>
 
-<table class="table text-center border">
-    <thead class="thead-dark">
-        <tr>
-            <th>Nome</th>
-            <th>Nascimento</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var cliente in Model)
-        {
+    <!-- Botão Criar Novo Cliente -->
+    <p class="text-center">
+        <a asp-action="Create" class="btn btn-primary">Criar Novo Cliente</a>
+    </p>
+
+    <!-- Tabela de Clientes -->
+    <table class="table text-center border table-striped">
+        <thead class="thead-dark">
             <tr>
-                <td>@cliente.Nome</td>
-                <td>@cliente.Nascimento</td>
-                <td class="d-flex justify-content-center">
-                    <a href="@Url.Action("Edit", "Clientes", new { id = cliente.ClienteID })" class="btn btn-warning mx-1">Editar</a>
-                    <a href="@Url.Action("Details", "Clientes", new { id = cliente.ClienteID })" class="btn btn-primary mx-1">Detalhes</a>
-                    <a href="@Url.Action("Delete", "Clientes", new { id = cliente.ClienteID })" class="btn btn-danger mx-1">Deletar</a>
-                </td>
+                <th>Nome</th>
+                <th>Nascimento</th>
+                <th>Ações</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nome</td>
+                    <td>@item.Nascimento.ToString("dd/MM/yyyy")</td>
+                    <td class="d-flex justify-content-center">
+                        <a href="@Url.Action("Edit", "Clientes", new { id = item.ClienteID })" class="btn btn-warning mx-1">Editar</a>
+                        <a href="@Url.Action("Details", "Clientes", new { id = item.ClienteID })" class="btn btn-info mx-1">Detalhes</a>
+                        <a href="@Url.Action("Delete", "Clientes", new { id = item.ClienteID })" class="btn btn-danger mx-1">Deletar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -17,10 +17,12 @@ namespace ExemploEF.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Clientes.ToListAsync());
-        }
+       public IActionResult Index()
+       {
+           var clientes = _context.Clientes.ToList(); // ou o código que você está utilizando para buscar os dados
+           return View(clientes); // Passa a lista de clientes para a visão
+       }
+
 
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -32,7 +34,10 @@ namespace ExemploEF.Controllers
             return View(cliente);
         }
 
-        public IActionResult Create() => View();
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
